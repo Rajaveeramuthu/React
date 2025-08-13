@@ -402,6 +402,34 @@ export default ContactUs
 }
 
 
+page.tsx
+
+
+
+
+// import ContactUs from '@/components/contact-us/contact'
+// import React from 'react'
+
+
+
+// export default async function Contact() {
+
+//   const phoneno = await fetch("https://restcountries.com/v3.1/all?fields=cca2,idd,name,flags", {
+//     cache: "no-store"
+//   })
+
+//   const res = await phoneno.json();
+//   console.log(res)
+
+//   return (
+//     <div>
+//       <ContactUs Contriescode={res} /> 
+//     </div>
+//   )
+// }
+
+
+
 
 
 
