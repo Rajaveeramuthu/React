@@ -1,0 +1,408 @@
+CONTACT US
+
+
+'use client'
+import { Input } from '@mantine/core'
+import React, { useState } from 'react'
+import { IconPhoneCall, IconMail } from '@tabler/icons-react'
+import toast, { Toaster } from 'react-hot-toast';
+
+
+import './contact.css'
+
+import { PhoneInput } from '@/components/phone/phone'
+
+const ContactUs = ({ Contriescode }: any) => {
+    console.log("this is the data from contact-us:",Contriescode)
+
+    const message = () => toast('Submited')
+
+
+    const [data, setdata] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+    })
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setdata((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+
+        console.log(data);
+        
+    };
+
+    const Fetchdata = async (data: any) => {
+        try {
+            const event = await fetch('http://localhost:5000/cta', {
+                method: "POST",
+                body: JSON.stringify([{
+                    data
+                }])
+            })
+            setdata({
+                name: '',
+                email: '',
+                message: '',
+                phone: '',
+
+            })
+        }
+        catch (err) {
+            console.log("Error", err)
+        }
+        message()
+    }
+
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+            <div className='contact-container' >
+                <div className='left-section'>
+                    <h1 className='title'>Get in <span>touch</span> </h1>
+                    <p className='subtitle'>Whether it’s a cozy sofa or the latest smart TV, we’re happy to help you choose right.</p>
+                    <form onSubmit={(e) => {
+                        e.preventDefault()
+                        Fetchdata(data)
+
+                    }} className='form'>
+                        <div className='fields'>
+                            <input value={data.name} onChange={handleChange} className='input-field' type='text' name='name' placeholder='Enter the name' />
+                            <input value={data.email} onChange={handleChange} className='input-field' type='text' name="email" placeholder='jhon123@gmail.com' />
+                        </div>
+                        {/* <PhoneInput countries={Contriescode} value={data.phone}
+                            onChange={(value: string) => setdata((prev) => ({ ...prev, phone: value }))} /> */}
+
+                        <textarea value={data.message} onChange={handleChange} className='message-field' name='message' placeholder='Your message' />
+                        <div>
+                            <button className='submit'>Submit</button>
+                        </div>
+                    </form>
+                    <div className='contact-help'>
+                        <div className='contact-icons'>
+                            <IconPhoneCall size={40} />
+                            <div className='details'>
+                                <p>Phone</p>
+                                <p>123454566</p>
+                            </div>
+                        </div>
+                        <div className='contact-icons'>
+                            <IconMail size={40} />
+                            <div className='details'>
+                                <p>Mail</p>
+                                <p>123@gmail.com</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div className='empty'>
+                    <div className="map-section">
+                        <iframe
+                            className="map"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7824.606506585086!2d77.708828!3d11.312531!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba96fbd1bc47de5%3A0x578cfded5fb0353d!2sNikavi%20Tronics!5e0!3m2!1sen!2sin!4v1738079951456!5m2!1sen!2sin"
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Google Map"
+                        ></iframe>
+                    </div>
+                </div>
+            </div >
+            <Toaster />
+        </div>
+    )
+}
+
+export default ContactUs
+
+//css//
+
+
+.contact-container {
+    /* position: relative;
+    top: 50px;
+    left: 180px;
+    right: 90px; */
+     display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    height: 600px;
+    width: 1200px;
+    background-color: white;
+    padding-left: 20px;
+    border-radius: 10px;
+    position: relative;
+
+}
+
+
+.empty {
+    width: 300px;
+    background-color: blue;
+    border-radius: 10px;
+}
+
+
+.map-section {
+    /* flex: 1 1 400px; */
+    display: flex;
+    padding: 0px;
+
+}
+
+.map {
+    position: absolute;
+    right: 120px;
+    top: 30px;
+    height: 550px;
+    width: 500px;
+    object-fit: cover;
+    border: none;
+}
+
+
+.left-section {
+    width: 40%;
+}
+
+
+.input-field {
+    border: none;
+    width: 15rem;
+    border-bottom: 1px solid rgb(66, 64, 64);
+    margin-top: 30px;
+    padding: 10px;
+
+}
+
+.input-field:hover {
+    border: none;
+}
+
+.message-field {
+    width: 480px;
+    height: 150px;
+    margin-top: 20px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.submit {
+    width: 30rem;
+    height: 35px;
+    background-color: rgb(67, 67, 232);
+    border: none;
+    color: aliceblue;
+    border-radius: 5px;
+}
+
+.contact-help {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+.fields {
+    display: flex;
+    gap: 10px;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    padding-top: 10px;
+}
+
+.title span {
+    color: blue;
+}
+
+.subtitle {
+    color: #1b1a1a;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 500px;
+}
+
+.contact-icons {
+    display: flex;
+}
+
+
+.details {
+    display: grid;
+}
+
+.details p {
+    font-size: small;
+}
+
+@media (max-width:1200) {
+    .map {
+        position: absolute;
+        right: 100px;
+        top: 30px;
+    }
+}
+
+@media (max-width:1100) {
+    .map {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+
+    .contact-container {
+        margin: 20px;
+    }
+
+}
+
+@media (max-width:1045) {
+    .map {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        height: 550px;
+        width: 450px;
+    }
+
+    .contact-container {
+        margin: 20px;
+    }
+
+}
+
+@media (max-width:1000) {
+    .map {
+        position: absolute;
+        right: 50px;
+        top: 90px;
+        height: 550px;
+        width: 450px;
+    }
+
+    .contact-container {
+        margin: 20px;
+    }
+
+    .submit {
+        width: 25rem;
+        height: 35px;
+
+    }
+
+    .message-field {
+        width: 400px;
+    }
+}
+
+@media (max-width:1000px) {
+
+    .map {
+        position: absolute;
+        right: 40px;
+        top: 20px;
+        height: 550px;
+        width: 400px;
+    }
+    .contact-container {
+        margin: 20px;
+    }
+     
+}
+
+@media (max-width:900px) {
+
+    .map {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        height: 550px;
+        width: 350px;
+    }
+    .contact-container {
+        margin: 20px;
+    }
+}
+
+@media (max-width: 800px) {
+  .contact-container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .left-section {
+    width: 100%;
+  }
+
+  .form {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .empty {
+    display: block;
+    width: 100%;
+    background-color: transparent; 
+  }
+
+  .map-section {
+    width: 100%;
+    height: 300px;
+  }
+
+  .map {
+    position: relative;
+    left: 4px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .message-field,
+  .submit,
+  .input-field {
+    width: 100%;
+  }
+
+  .fields {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+
+@media (max-width:700px){
+    .map{
+        position: relative;
+        top:0px
+    }
+}
+
+
+
+
+
+
