@@ -1,0 +1,23 @@
+import React, { useState,useEffect } from 'react';
+
+const Login=()=>{
+    // const[user,setUser]=useState("")    
+    const [user,setUser]=useState({
+        name:"",
+        email:"",
+        password:""
+    })
+
+    console.log(user)
+    return(
+        <div>
+            <input onChange={(e)=>setUser({...user,name:e.target.value})}/>{user.name}
+             <input onChange={(e)=>setUser({...user,email:e.target.value})}/>{user.email}
+           <input onChange={(e)=>setUser({...user,password:e.target.value})}/>{user.password}
+            {/* <button onClick={()=>console.log(user)}>Login</button>     */}
+        </div>
+    )
+}
+                                
+                               
+export default Login;
